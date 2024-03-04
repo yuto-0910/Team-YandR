@@ -1,4 +1,4 @@
-# OrangeFarmPJ
+# Orange Farm Project
 山本農園のDXプロジェクト
 
 ## 基本情報
