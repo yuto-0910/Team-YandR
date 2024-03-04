@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <title>確認画面</title>
+    <link rel="stylesheet" href="style.css"> <!-- ここでスタイルシートをリンク -->
+</head>
+<body>
+    <h1>確認画面</h1>
+    <p><strong>商品名:</strong> <span id="product-name"></span></p>
+    <p><strong>箱数:</strong> <span id="box-count"></span></p>
+    <p><strong>電話番号:</strong> <span id="phone-number"></span></p>
+    <p><strong>メールアドレス:</strong> <span id="email"></span></p>
+    <p><strong>郵便番号:</strong> <span id="postal-code"></span></p>
+    <p><strong>住所:</strong> <span id="full-address"></span></p>
+    <p><strong>名前:</strong> <span id="name"></span></p>
+    <p><strong>備考:</strong> <span id="remarks"></span></p>
+
+    <button onclick="confirmOrder()">注文を確定</button>
+    <button onclick="editInformation()">情報修正</button>
+  
+    <script>
+      document.addEventListener('DOMContentLoaded', function() {
+          document.getElementById('product-name').textContent = localStorage.getItem('product_name');
+          document.getElementById('box-count').textContent = localStorage.getItem('box_count');
+          document.getElementById('phone-number').textContent = localStorage.getItem('phone_number');
+          document.getElementById('email').textContent = localStorage.getItem('email');
+          document.getElementById('postal-code').textContent = localStorage.getItem('postal_code');
+          // 住所の結合
+          var fullAddress = localStorage.getItem('prefecture') + ' ' +
+                            localStorage.getItem('city') + ' ' +
+                            localStorage.getItem('address_details');
+          document.getElementById('full-address').textContent = fullAddress;
+          document.getElementById('name').textContent = localStorage.getItem('name');
+          document.getElementById('remarks').textContent = localStorage.getItem('remarks');
+      });
+
+        function confirmOrder() {
+            alert('注文ありがとうございました。');
+            clearFormData(); // フォームデータをクリア
+            window.location.href = 'index.html'; // ユーザーをindex.htmlにリダイレクト
+        }
+        function editInformation() {
+            window.location.href = 'index.html'; // ユーザーをindex.htmlにリダイレクト
+        }
+        function clearFormData() {
+            localStorage.clear(); // ローカルストレージのデータをクリア
+        }
+        
+    </script>
+    <script>
+        function confirmOrder() {
+            if (confirm('注文を確定しますか？')) {
+                // ローカルストレージからデータを取得
+                var formData = {
+                    productName: localStorage.getItem('product_name'),
+                    boxCount: localStorage.getItem('box_count'),
+                    phoneNumber: localStorage.getItem('phone_number'),
+                    // 他の必要なデータ
+                };
+  
+                // Ajaxリクエストでデータを送信
+                fetch('send_mail.php', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify(formData),
+                })
+                .then(response => response.text())
+                .then(data => {
+                    alert('注文が確定しました。');
+                    localStorage.clear(); // ローカルストレージをクリア
+                    window.location.href = 'index.html'; // リダイレクト
+                })
+                .catch(error => {
+                    console.error('エラー:', error);
+                });
+            }
+        }
+    </script>
+</body>
+</html>
