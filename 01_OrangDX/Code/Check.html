@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <title>確認画面</title>
+    <link rel="stylesheet" href="style.css"> <!-- スタイルシート -->
+</head>
+<body>
+    <h1>確認画面</h1>
+    <!-- 注文内容の表示 -->
+    <p><strong>商品名:</strong> <span id="product-name"></span></p>
+    <p><strong>箱数:</strong> <span id="box-count"></span></p>
+    <p><strong>電話番号:</strong> <span id="phone-number"></span></p>
+    <p><strong>メールアドレス:</strong> <span id="email"></span></p>
+    <p><strong>郵便番号:</strong> <span id="postal-code"></span></p>
+    <p><strong>住所:</strong> <span id="full-address"></span></p>
+    <p><strong>名前:</strong> <span id="name"></span></p>
+    <p><strong>備考:</strong> <span id="remarks"></span></p>
+
+    <!-- 操作ボタン -->
+    <button onclick="confirmOrder()">注文を確定</button>
+    <button onclick="editInformation()">情報修正</button>
+  
+    <script>
+      // ページロード時の処理
+      document.addEventListener('DOMContentLoaded', function() {
+          // localStorageから情報を読み込み、表示
+          var elems = ['product-name', 'box-count', 'phone-number', 'email', 'postal-code', 'name', 'remarks'];
+          elems.forEach(function(elem) {
+              document.getElementById(elem).textContent = localStorage.getItem(elem.replace('-', '_'));
+          });
+          // 住所の組み立てと表示
+          var fullAddress = localStorage.getItem('prefecture') + ' ' +
+                            localStorage.getItem('city') + ' ' +
+                            localStorage.getItem('address_details');
+          document.getElementById('full-address').textContent = fullAddress;
+      });
+
+      // 注文確定
+      function confirmOrder() {
+          alert('注文を確定します。');
+          clearFormData();
+          window.location.href = 'index.html';
+      }
+      
+      // 情報修正
+      function editInformation() {
+          window.location.href = 'index.html';
+      }
+      
+      // フォームデータクリア
+      function clearFormData() {
+          localStorage.clear();
+      }
+    </script>
+    <script>
+        // 注文確定時の処理改善版
+        function confirmOrder() {
+            if (confirm('注文を確定しますか？')) {
+                // データの準備
+                var formData = {
+                    productName: localStorage.getItem('product_name'),
+                    boxCount: localStorage.getItem('box_count'),
+                    phoneNumber: localStorage.getItem('phone_number'),
+                    // 他データ
+                };
+                // サーバーへ送信
+                fetch('send_mail.php', {
+                    method: 'POST',
+                    headers: {'Content-Type': 'application/json'},
+                    body: JSON.stringify(formData),
+                })
+                .then(response => response.text())
+                .then(data => {
+                    alert('注文確定しました。');
+                    clearFormData();
+                    window.location.href = 'index.html';
+                })
+                .catch(error => console.error('エラー:', error));
+            }
+        }
+    </script>
+</body>
+</html>

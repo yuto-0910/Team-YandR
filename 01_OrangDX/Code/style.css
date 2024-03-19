@@ -1,0 +1,72 @@
+body {
+    font-family: 'Times New Roman', serif;
+    background-color: #f7f4ee; /* クリーム色の背景で、読みやすさを保ちます */
+    color: #5a4634; /* 暖かみのある茶色系のテキストカラー */
+    margin: 0;
+    padding: 20px;
+}
+
+h1 {
+    color: #6b8f23; /* 農家を連想させる緑色で、タイトルを際立たせます */
+}
+
+.form-group {
+    margin-bottom: 20px; /* 各フォームグループの間隔を設定 */
+}
+
+label {
+    display: block;
+    margin-bottom: 8px; /* ラベルの下に余白を作り、視認性を高めます */
+}
+
+input[type="text"],
+textarea {
+    width: 100%; /* レスポンシブデザインを意識した幅設定 */
+    padding: 10px;
+    margin-top: 5px;
+    border: 1px solid #a8a8a8; /* ソフトなグレーで境界線を設定 */
+    border-radius: 4px; /* 角を丸くしてユーザーフレンドリーなデザインに */
+    box-sizing: border-box; /* paddingを含んだ幅で計算 */
+    background-color: #fff; /* 入力フィールドを白くして視認性を高めます */
+    font-size: 16px; /* 読みやすいフォントサイズ */
+}
+
+input[type="text"]:focus,
+textarea:focus {
+    border-color: #8a6d3b; /* フォーカス時には焦げ茶色で目立たせます */
+    outline: none; /* ブラウザのデフォルトのアウトラインを無効化 */
+}
+
+.address-field {
+    margin-bottom: 15px; /* 住所フィールドの間隔を設定 */
+}
+
+button {
+    background-color: #8a6d3b; /* 焦げ茶色でボタンをスタイリッシュに */
+    color: white;
+    padding: 10px 15px;
+    border: none;
+    border-radius: 4px; /* ボタンの角を丸く */
+    cursor: pointer; /* ホバー時にカーソルをポインターに変更 */
+    font-size: 16px; /* 読みやすいフォントサイズ */
+}
+
+button:hover {
+    background-color: #6b8f23; /* ホバー時には濃い緑色で変化し、インタラクティブに */
+}
+
+.required::before {
+    content: "※";
+    color: red; /* 必須項目の前に赤い「※」マークを追加 */
+    margin-right: 4px;
+}
+
+
+/* .required {
+    color: red; /* 必須項目のラベルを赤色に設定 */
+/* } */
+
+/* input:invalid,
+textarea:invalid {
+    border: 2px solid red; /* 未入力の必須フィールドを赤くハイライト */
+/* } */
